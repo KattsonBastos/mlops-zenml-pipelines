@@ -4,8 +4,7 @@ from zenml.pipelines import pipeline
 @pipeline(enable_cache=False)
 def training_rf_pipeline(
     get_data,
-    change_type,
-    create_features,
+    feature_engineering,
     get_train_test_data,
     scale_data,
     train_model,
@@ -16,9 +15,7 @@ def training_rf_pipeline(
 
     data = get_data()
 
-    data = change_type(data = data)
-
-    data = create_features(data = data)
+    data = feature_engineering(data = data)
 
     X_train, X_test, y_train, y_test = get_train_test_data(data = data)
 

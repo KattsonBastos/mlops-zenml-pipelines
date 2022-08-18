@@ -10,29 +10,22 @@ from zenml.steps         import step, Output
 
 
 @step
-def change_dtypes(data: pd.DataFrame) -> Output(
-    dataframe=pd.DataFrame
-    ):
-    """Change some coluns data types."""
-
-    dataframe =  data.copy()
-
-    # optimize memory
-    dataframe['age'] = dataframe['age'].astype(np.int16)
-    dataframe['ap_hi'] = dataframe['ap_hi'].astype(np.int16)
-    dataframe['ap_lo'] = dataframe['ap_lo'].astype(np.int16)
-    dataframe['cholesterol'] = dataframe['cholesterol'].astype(np.int8)
-    dataframe['cardio'] = dataframe['cardio'].astype(np.int8)
-
-    return dataframe
-
-@step
 def feature_engineering(data: pd.DataFrame) -> Output(
     dataframe=pd.DataFrame
 ):
     """Create new features."""
 
     dataframe = data.copy()
+
+    dataframe['age'] = dataframe['age'].astype(np.int16)
+
+    dataframe['ap_hi'] = dataframe['ap_hi'].astype(np.int16)
+
+    dataframe['ap_lo'] = dataframe['ap_lo'].astype(np.int16)
+
+    dataframe['cholesterol'] = dataframe['cholesterol'].astype(np.int8)
+
+    dataframe['cardio'] = dataframe['cardio'].astype(np.int8)
 
     # age
     dataframe['age'] = round(dataframe['age'] / 365).astype(int)
