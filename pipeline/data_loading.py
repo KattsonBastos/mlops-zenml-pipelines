@@ -9,6 +9,8 @@ def load_data() -> Output(
     data=pd.DataFrame
     ):
 
+    """Load a dataset."""
+
     data = pd.read_csv('../data/cardio_train_sampled.csv')
 
     return data

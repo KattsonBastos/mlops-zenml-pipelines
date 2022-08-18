@@ -8,10 +8,12 @@ from sklearn.model_selection     import train_test_split
 # zenml importing
 from zenml.steps         import step, Output
 
+
 @step
 def change_dtypes(data: pd.DataFrame) -> Output(
     dataframe=pd.DataFrame
     ):
+    """Change some coluns data types."""
 
     dataframe =  data.copy()
 
@@ -28,6 +30,7 @@ def change_dtypes(data: pd.DataFrame) -> Output(
 def feature_engineering(data: pd.DataFrame) -> Output(
     dataframe=pd.DataFrame
 ):
+    """Create new features."""
 
     dataframe = data.copy()
 
@@ -51,6 +54,7 @@ def feature_engineering(data: pd.DataFrame) -> Output(
 def split_train_test(data: pd.DataFrame) -> Output(
     X_train = np.ndarray, X_test = np.ndarray, y_train = np.ndarray, y_test = np.ndarray
     ):
+    """Receive a pandas DataFrame and return the data splitted into train and test."""
 
     X = data.drop('cardio', axis = 1).values
 
@@ -65,6 +69,7 @@ def split_train_test(data: pd.DataFrame) -> Output(
 def scale_training_data(X_train: np.ndarray, X_test: np.ndarray) -> Output(
     X_train_scaled = np.ndarray, X_test_scaled = np.ndarray
     ):
+    """Scale X variables."""
 
     scaler = MinMaxScaler()
 

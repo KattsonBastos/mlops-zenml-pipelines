@@ -3,7 +3,7 @@ import mlflow
 import numpy as np
 
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.base import ClassifierMixin
 
 # zenml importing
 from zenml.steps         import step, Output
@@ -12,9 +12,10 @@ from zenml.integrations.mlflow.mlflow_step_decorator import enable_mlflow
 
 @enable_mlflow 
 @step(enable_cache=False)
-def evaluate_model(model: RandomForestClassifier, X_test: np.ndarray, y_test: np.ndarray) -> Output(
-    accuracy = float, precision = float, recall = float, f1 = float
+def evaluate_model(model: ClassifierMixin, X_test: np.ndarray, y_test: np.ndarray) -> Output(
+    recall = float #accuracy = float, precision = float, recall = float, f1 = float
     ):
+    """Model Evaluation and ML metrics register."""
     
     y_preds = model.predict(X_test)
 
@@ -29,4 +30,4 @@ def evaluate_model(model: RandomForestClassifier, X_test: np.ndarray, y_test: np
     mlflow.log_metric("recall", recall)
     mlflow.log_metric("f1", f1)
 
-    return accuracy, precision, recall, f1
+    return recall
